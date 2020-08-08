@@ -11,11 +11,9 @@ on:
     branches: [ master ]
   
 jobs:
-  install-and-test:
-    runs-on: ubuntu-latest
 
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         node-version: [10.x]
