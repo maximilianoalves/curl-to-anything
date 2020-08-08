@@ -10,6 +10,7 @@ Ok, go ahead! 🚀
 
 ## Stack
 - ReactJS
+- Typescript
 - Materialize
 - GH Pages
 
