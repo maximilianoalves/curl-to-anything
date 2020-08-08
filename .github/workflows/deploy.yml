@@ -13,9 +13,13 @@ on:
 jobs:
   install-and-test:
     runs-on: ubuntu-latest
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [8.x, 10.x]
+        node-version: [10.x]
+
     steps:
       - uses: actions/checkout@master
       - name: Use Node.js ${{ matrix.node-version }}
@@ -23,12 +27,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install
-        run: |
-          yarn
+        run: npm install
 
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout
         uses: actions/checkout@master
 
@@ -38,4 +38,4 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: build
-          BUILD_SCRIPT: yarn && yarn build
+          BUILD_SCRIPT: npm install && npm run build
