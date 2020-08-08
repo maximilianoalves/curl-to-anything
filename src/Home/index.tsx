@@ -7,7 +7,7 @@ function Home() {
     <div>
       <nav className="blue darken-2">
         <div className="nav-wrapper">
-          <a href="#" className="brand-logo center">cURL to Anything</a>
+          <a className="brand-logo center">cURL to Anything</a>
         </div>
       </nav>
       <div className="row center content">
