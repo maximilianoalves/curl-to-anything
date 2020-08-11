@@ -7,14 +7,14 @@ function Home() {
     <div>
       <nav className="blue darken-2">
         <div className="nav-wrapper">
-          <a className="brand-logo center">cURL to Anything</a>
+          <a href="/#" className="brand-logo center">cURL to Anything</a>
         </div>
       </nav>
       <div className="row center content">
         <div className="row">
             <div className="row  textarea-curl">
-                <div className="col s6"><a onClick={() => {}}>GET example</a></div>
-                <div className="col s6"><a onClick={() => {}}>POST example</a></div>
+                <div className="col s6"><button className="btn waves-effect waves-light" onClick={() => {}}>GET example</button></div>
+                <div className="col s6"><button className="btn waves-effect waves-light" onClick={() => {}}>POST example</button></div>
                 <div className="input-field col s12">
                     <textarea id="curl" className="materialize-textarea"></textarea>
                     <label>cURL</label>
