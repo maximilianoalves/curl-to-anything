@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //elements
 import Header from '../../elements/Header';
-import Form from '../../elements/Form';
+import MyForm from '../../elements/MyForm';
 
 import './styles.css'
 
@@ -10,7 +10,7 @@ class Home extends Component {
     return (
       <div>
         <Header />
-        <Form />
+        <MyForm />
       </div>
     );
   }
