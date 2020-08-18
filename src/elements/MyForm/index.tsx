@@ -4,6 +4,8 @@ import { Formik, Field, Form, FormikHelpers } from 'formik'
 import {Select, TextField} from 'formik-material-ui'
 import styles from './styles.module.css';
 
+import CurlConverterCore from '../../rules/curlConverter.core';
+
 export interface IFormState {
     frameworks: string;
     curlCommand: string;
@@ -15,7 +17,12 @@ class MyForm extends React.Component<IFormProps, IFormState> {
 
   handleSubmit({ frameworks, curlCommand }: IFormState, { setSubmitting }: FormikHelpers<IFormState>) {
     if (frameworks === "restassured") {
-      alert("rest")
+    const restConverter = new CurlConverterCore(curlCommand);
+
+    console.log("metodo: ", restConverter.method);
+    console.log("url: ", restConverter.url);
+    console.log("body: ", restConverter.body);
+    console.log("headers: ", restConverter.headers);
     } else if (frameworks === "cypress") {
       alert("cypress da massa")
     } 
