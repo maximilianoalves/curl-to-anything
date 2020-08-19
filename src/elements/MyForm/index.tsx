@@ -33,6 +33,24 @@ class MyForm extends Component<IFormProps, IFormState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  curlFieldValidation(value: string) {
+    let error: string = "";
+    if (!value) {
+      error = "Empty field"
+    } else if (!value.includes("curl")) {
+      error = "Invalid curl command";
+    }
+    return error;
+  }
+
+  frameworksFieldValidation(value: string) {
+    let error: string = "";
+    if (!value) {
+      error = "First, choose your framework"
+    }
+    return error;
+  }
+
   render() {
       return (
           <div>
@@ -45,38 +63,48 @@ class MyForm extends Component<IFormProps, IFormState> {
                     }}
                     onSubmit={this.handleSubmit}
                   >
-                    <Form>
-                      <Box margin={2}>
-                        <FormControl fullWidth>
-                          <InputLabel shrink={true} htmlFor="framework"> Choose your framework </InputLabel>
-                          <Field component={Select} type="text" name="frameworks" inputProps={{name: 'frameworks', id: 'frameworks'}}>
-                            <MenuItem value="restassured">RestAssured</MenuItem>
-                            <MenuItem value="cypress">Cypress</MenuItem>
-                          </Field>
-                        </FormControl>
-                      </Box>
-                      <Box margin={2}>
-                        <FormControl fullWidth>
-                          <Field
-                            component={TextField}
-                            type="text"
-                            label="cURL"
-                            variant="outlined"
-                            multiline
-                            rows={4}
-                            placeholder="Insert your curl command"
-                            name="curlCommand"
-                          />
-                        </FormControl>
-                      </Box>
-                      <Box margin={2}>
-                        <FormControl fullWidth>
-                          <Button variant="contained" type="submit" color="primary">
-                            CURLVERT
-                          </Button>
-                        </FormControl>
-                      </Box>
-                    </Form>
+                    {({errors, touched, isValidating}) => (
+                        <Form>
+                        <Box margin={2}>
+                          <FormControl fullWidth>
+                            <InputLabel shrink={true} htmlFor="framework">Choose your framework</InputLabel>
+                            <Field 
+                              component={Select} 
+                              type="text"
+                              name="frameworks" 
+                              inputProps={{name: 'frameworks', id: 'frameworks'}}
+                              validate={this.frameworksFieldValidation}
+                            >
+                              <MenuItem value="restassured">RestAssured</MenuItem>
+                              <MenuItem value="cypress">Cypress</MenuItem>
+                            </Field>
+                            <div className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">{errors.frameworks}</div>
+                          </FormControl>
+                        </Box>
+                        <Box margin={2}>
+                          <FormControl fullWidth>
+                            <Field
+                              component={TextField}
+                              type="text"
+                              label="cURL"
+                              variant="outlined"
+                              multiline
+                              rows={4}
+                              placeholder="Insert your curl command"
+                              name="curlCommand"
+                              validate={this.curlFieldValidation}
+                            />
+                          </FormControl>
+                        </Box>
+                        <Box margin={2}>
+                          <FormControl fullWidth>
+                            <Button variant="contained" type="submit" color="primary">
+                              CURLVERT
+                            </Button>
+                          </FormControl>
+                        </Box>
+                      </Form>
+                    )}
                   </Formik>
               </Container>
               <Container maxWidth="md">
