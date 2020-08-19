@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Container, Box, FormControl, InputLabel, MenuItem, Button, Paper} from '@material-ui/core';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {Container, Box, FormControl, InputLabel, MenuItem, Button} from '@material-ui/core';
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import {Select, TextField} from 'formik-material-ui'
 
@@ -76,7 +78,16 @@ class MyForm extends Component<IFormProps, IFormState> {
                       </Box>
                     </Form>
                   </Formik>
-                  <Paper>{this.state.restassuredSnippet}</Paper>
+              </Container>
+              <Container maxWidth="md">
+                <Box margin={4}>
+                  {this.state.restassuredSnippet ? 
+                    <SyntaxHighlighter showLineNumbers language="java" style={atomDark}>
+                      {this.state.restassuredSnippet}
+                    </SyntaxHighlighter> : 
+                    null
+                  }
+                </Box>
               </Container>
           </div>
       )
