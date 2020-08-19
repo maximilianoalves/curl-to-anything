@@ -1,32 +1,36 @@
-import React from 'react';
+import React, {Component} from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {Container, Box, FormControl, InputLabel, MenuItem, Button} from '@material-ui/core';
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import {Select, TextField} from 'formik-material-ui'
-import styles from './styles.module.css';
 
-import CurlConverterCore from '../../rules/curlConverter.core';
+import RestAssuredRule from '../../rules/restassured.rule';
 
 export interface IFormState {
     frameworks: string;
     curlCommand: string;
+    restassuredSnippet: string;
 }
 
 export interface IFormProps { }
 
-class MyForm extends React.Component<IFormProps, IFormState> {
+class MyForm extends Component<IFormProps, IFormState> {
 
   handleSubmit({ frameworks, curlCommand }: IFormState, { setSubmitting }: FormikHelpers<IFormState>) {
     if (frameworks === "restassured") {
-    const restConverter = new CurlConverterCore(curlCommand);
-
-    console.log("metodo: ", restConverter.method);
-    console.log("url: ", restConverter.url);
-    console.log("body: ", restConverter.body);
-    console.log("headers: ", restConverter.headers);
+      const restassuredRule = new RestAssuredRule(curlCommand);
+      this.setState({ restassuredSnippet: restassuredRule.mountSnippet()})
     } else if (frameworks === "cypress") {
-      alert("cypress da massa")
+      alert("Work in progress")
     } 
     setSubmitting(false);
+  }
+
+  constructor(props: IFormProps) {
+    super(props);
+    this.state = {frameworks: "", curlCommand: "", restassuredSnippet: ""};
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   render() {
@@ -37,6 +41,7 @@ class MyForm extends React.Component<IFormProps, IFormState> {
                     initialValues={{
                       frameworks: '',
                       curlCommand: '',
+                      restassuredSnippet: ''
                     }}
                     onSubmit={this.handleSubmit}
                   >
@@ -73,6 +78,16 @@ class MyForm extends React.Component<IFormProps, IFormState> {
                       </Box>
                     </Form>
                   </Formik>
+              </Container>
+              <Container maxWidth="md">
+                <Box margin={4}>
+                  {this.state.restassuredSnippet ? 
+                    <SyntaxHighlighter showLineNumbers language="java" style={atomDark}>
+                      {this.state.restassuredSnippet}
+                    </SyntaxHighlighter> : 
+                    null
+                  }
+                </Box>
               </Container>
           </div>
       )

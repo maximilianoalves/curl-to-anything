@@ -1,4 +1,4 @@
-export default class CurlConverterCore {
+export default class CurlverterCore {
 
     curl: string;
     url?: string;
@@ -14,7 +14,6 @@ export default class CurlConverterCore {
 
     converter() {
         let curlSplited = this.curl.split("--");
-
         curlSplited.forEach( (value) => {
             if (value.includes("header")) {
                 let header = value.split("'");
