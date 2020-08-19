@@ -9,35 +9,42 @@ export default class RestAssuredRule {
     }
 
     mountSnippet() {
-        return `given()${this.mountHeaders()}${this.mountBody()}.when()${this.mountUrl()}.then()`
+        return `given()${this.mountHeaders()}${this.mountBody()}\n.when()${this.mountUrl()}\n.then()`
     }
 
     mountUrl() {
+        let method: string = ""
         switch(this.curlProperties.method) {
             case 'GET': 
-                return `.get(${this.curlProperties.url})`;
+                method = `.get(${this.curlProperties.url})`;
+                break;
             case "POST": 
-                return `.post(${this.curlProperties.url})`;
+                method = `.post(${this.curlProperties.url})`;
+                break;
             case "PUT": 
-                return `.put(${this.curlProperties.url})`;
+                method = `.put(${this.curlProperties.url})`;
+                break;
             case "DELETE": 
-                return `.delete(${this.curlProperties.url})`;
+                method = `.delete(${this.curlProperties.url})`;
+                break;
         }
+        return "\n"+method;
     }
 
     mountHeaders() {
         let headerSnippet: string = "";
         this.curlProperties.headers.forEach( element  => {
-            headerSnippet += `.header("${element.name.trim()}", "${element.value.trim()}")`
+            headerSnippet += `\n.header("${element.name.trim()}", "${element.value.trim()}")`
         })
         return headerSnippet;
     }
 
     mountBody() {
+        let body: string = ""
         if (typeof this.curlProperties.body != 'undefined' && this.curlProperties.body) {
-            return `.body${this.curlProperties.body}`;
+            body = `\n.body(${this.curlProperties.body})`;
         }
+        return body;
     }
-
-
+    
 }
