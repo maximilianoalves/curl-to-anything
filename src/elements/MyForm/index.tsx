@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import {Container, Box, FormControl, InputLabel, MenuItem, Button} from '@material-ui/core';
+import {FileCopyOutlined} from '@material-ui/icons';
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import {Select, TextField} from 'formik-material-ui'
-
+//rules
 import RestAssuredRule from '../../rules/restassured.rule';
+import KarateRule from '../../rules/karate.rule'
 
 export interface IFormState {
     frameworks: string;
     curlCommand: string;
-    restassuredSnippet: string;
+    snippet: string;
+    language: string;
 }
 
 export interface IFormProps { }
@@ -20,16 +24,21 @@ class MyForm extends Component<IFormProps, IFormState> {
   handleSubmit({ frameworks, curlCommand }: IFormState, { setSubmitting }: FormikHelpers<IFormState>) {
     if (frameworks === "restassured") {
       const restassuredRule = new RestAssuredRule(curlCommand);
-      this.setState({ restassuredSnippet: restassuredRule.mountSnippet()})
-    } else if (frameworks === "cypress") {
-      alert("Work in progress")
+      this.setState({ snippet: restassuredRule.mountSnippet(), language: "java"})
+    } 
+    else if( frameworks === "karate" ) {
+      const karateRule = new KarateRule(curlCommand);
+      this.setState({ snippet: karateRule.mountSnippet(), language: "gherkin" })
+    }
+    else if (frameworks === "cypress") {
+      alert("cypress: Work in progress")
     } 
     setSubmitting(false);
   }
 
   constructor(props: IFormProps) {
     super(props);
-    this.state = {frameworks: "", curlCommand: "", restassuredSnippet: ""};
+    this.state = {frameworks: "", curlCommand: "", snippet: "", language: ""};
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -59,7 +68,8 @@ class MyForm extends Component<IFormProps, IFormState> {
                     initialValues={{
                       frameworks: '',
                       curlCommand: '',
-                      restassuredSnippet: ''
+                      snippet: '',
+                      language: ''
                     }}
                     onSubmit={this.handleSubmit}
                   >
@@ -76,6 +86,7 @@ class MyForm extends Component<IFormProps, IFormState> {
                               validate={this.frameworksFieldValidation}
                             >
                               <MenuItem value="restassured">RestAssured</MenuItem>
+                              <MenuItem value="karate">Karate/DSL</MenuItem>
                               <MenuItem value="cypress">Cypress</MenuItem>
                             </Field>
                             <div className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">{errors.frameworks}</div>
@@ -109,10 +120,18 @@ class MyForm extends Component<IFormProps, IFormState> {
               </Container>
               <Container maxWidth="md">
                 <Box margin={4}>
-                  {this.state.restassuredSnippet ? 
-                    <SyntaxHighlighter showLineNumbers language="java" style={atomDark}>
-                      {this.state.restassuredSnippet}
-                    </SyntaxHighlighter> : 
+                  {this.state.snippet ? 
+                    <SyntaxHighlighter showLineNumbers language={this.state.language} style={atomDark}>
+                      {this.state.snippet}
+                    </SyntaxHighlighter>
+                    : 
+                    null
+                  }
+                  {this.state.snippet ?
+                    <CopyToClipboard text={this.state.snippet}>
+                      <Button  startIcon={<FileCopyOutlined />} variant="outlined">Copy to clipboard</Button>
+                    </CopyToClipboard>
+                    : 
                     null
                   }
                 </Box>

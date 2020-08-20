@@ -1,7 +1,7 @@
 export default class CurlverterCore {
 
     curl: string;
-    url?: string;
+    url?: URL;
     method?: string;
     body: string
     headers: {name: string, value: string }[]
@@ -27,9 +27,7 @@ export default class CurlverterCore {
                     this.body = bodySplited[1];
                 }
                 if (value.includes("request")) {
-                    let request = value.split(" ");
-                    this.method = request[1];
-                    this.url = request[2];
+                    this.createUrl(value)
                 }
             })
         } else {
@@ -45,12 +43,17 @@ export default class CurlverterCore {
                     this.body = bodySplited[1];
                 }
                 if (value.includes("X")) {
-                    let request = value.split(" ");
-                    this.method = request[1];
-                    this.url = request[2];
+                    this.createUrl(value)
                 }
             })
         }
         
+    }
+
+    createUrl(value: String) {
+        let requestSplited = value.split(" ");
+        this.method = requestSplited[1];
+        let urlSplited = requestSplited[2].split("'")
+        this.url = new URL(urlSplited[1]);
     }
 }

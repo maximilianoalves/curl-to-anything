@@ -16,16 +16,16 @@ export default class RestAssuredRule {
         let method: string = ""
         switch(this.curlProperties.method) {
             case 'GET': 
-                method = `.get(${this.curlProperties.url})`;
+                method = `.get("${this.curlProperties.url}")`;
                 break;
             case "POST": 
-                method = `.post(${this.curlProperties.url})`;
+                method = `.post("${this.curlProperties.url}")`;
                 break;
             case "PUT": 
-                method = `.put(${this.curlProperties.url})`;
+                method = `.put("${this.curlProperties.url}")`;
                 break;
             case "DELETE": 
-                method = `.delete(${this.curlProperties.url})`;
+                method = `.delete("${this.curlProperties.url}")`;
                 break;
         }
         return "\n"+method;
