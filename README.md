@@ -18,13 +18,28 @@ Ok, go ahead! 🚀
 
 - [x] Project start
 - [ ] Migrate starting scripts from v1
-- [ ] Add GH Pages Support
-- [ ] Add GH Actions to automated deployment
-- [ ] CRUD Rest Assured
+- [x] Add GH Pages Support
+- [x] Add GH Actions to automated deployment
+- [x] CRUD Rest Assured
   - [x] GET
+  - [x] POST
+  - [x] PUT
+  - [x] DELETE
+- [x] CRUD Karate 
+  - [x] GET
+  - [x] POST
+  - [x] PUT
+  - [x] DELETE
+- [ ] Cypress
+  - [ ] GET
   - [ ] POST
   - [ ] PUT
   - [ ] DELETE
+- [ ] SuperTest
+  - [ ] GET
+  - [ ] POST
+  - [ ] PUT
+  - [ ] DELETE 
 
 ## Limitações
 
