@@ -1,3 +1,7 @@
+/**
+ * Implements the main features to generate snippets for each language
+ */
+
 export default class CurlverterCore {
 
     curl: string;

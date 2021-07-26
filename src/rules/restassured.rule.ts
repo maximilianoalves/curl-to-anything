@@ -9,26 +9,38 @@ export default class RestAssuredRule {
     }
 
     mountSnippet() {
-        return `given()${this.mountHeaders()}${this.mountBody()}\n.when()${this.mountUrl()}\n.then()`
+        return `given()${this.mountHeaders()}${this.mountBody()}\n${this.mountQueryParams()}.when()${this.mountUrl()}\n.then()`
+    }
+
+    mountQueryParams() {
+        let queryParamsRestAssured = "";
+        let queryParams = this.curlProperties.url?.searchParams;
+        let params = queryParams?.toString().split("&")
+        params?.forEach(param => {
+            let paramSplited = param.split("=");
+            queryParamsRestAssured += `.queryParam("${paramSplited[0]}", "${paramSplited[1]}")\n`
+        });
+        return queryParamsRestAssured;
     }
 
     mountUrl() {
         let method: string = ""
+        let url = this.curlProperties.url?.toString().substring(0, this.curlProperties.url.toString().indexOf("?"))
         switch(this.curlProperties.method) {
             case 'GET': 
-                method = `.get("${this.curlProperties.url}")`;
+                method = `.get("${url}")`;
                 break;
             case "POST": 
-                method = `.post("${this.curlProperties.url}")`;
+                method = `.post("${url}")`;
                 break;
             case "PUT": 
-                method = `.put("${this.curlProperties.url}")`;
+                method = `.put("${url}")`;
                 break;
             case "DELETE": 
-                method = `.delete("${this.curlProperties.url}")`;
+                method = `.delete("${url}")`;
                 break;
         }
-        return "\n"+method;
+        return "\n" + method;
     }
 
     mountHeaders() {
