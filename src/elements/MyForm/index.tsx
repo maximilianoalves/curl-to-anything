@@ -9,6 +9,7 @@ import {Select, TextField} from 'formik-material-ui'
 //rules
 import RestAssuredRule from '../../rules/restassured.rule';
 import KarateRule from '../../rules/karate.rule'
+import HttpartyRule from '../../rules/httparty.rule';
 
 export interface IFormState {
     frameworks: string;
@@ -22,17 +23,26 @@ export interface IFormProps { }
 class MyForm extends Component<IFormProps, IFormState> {
 
   handleSubmit({ frameworks, curlCommand }: IFormState, { setSubmitting }: FormikHelpers<IFormState>) {
-    if (frameworks === "restassured") {
-      const restassuredRule = new RestAssuredRule(curlCommand);
-      this.setState({ snippet: restassuredRule.mountSnippet(), language: "java"})
-    } 
-    else if( frameworks === "karate" ) {
-      const karateRule = new KarateRule(curlCommand);
-      this.setState({ snippet: karateRule.mountSnippet(), language: "gherkin" })
+    switch(frameworks) {
+      case "restassured": {
+        const restassuredRule = new RestAssuredRule(curlCommand);
+        this.setState({ snippet: restassuredRule.mountSnippet(), language: "java"})
+        break
+      }
+      case "karate": {
+        const karateRule = new KarateRule(curlCommand);
+        this.setState({ snippet: karateRule.mountSnippet(), language: "gherkin" })
+        break
+      }
+      case "httparty": {
+        const httpartyRule = new HttpartyRule(curlCommand);
+        this.setState({ snippet: httpartyRule.mountSnippet(), language: "ruby" })
+        break
+      }
+      default: {
+        alert("Work in progress")
+      }
     }
-    else if (frameworks === "cypress") {
-      alert("cypress: Work in progress")
-    } 
     setSubmitting(false);
   }
 
@@ -87,6 +97,7 @@ class MyForm extends Component<IFormProps, IFormState> {
                             >
                               <MenuItem value="restassured">RestAssured</MenuItem>
                               <MenuItem value="karate">Karate/DSL</MenuItem>
+                              <MenuItem value="httparty">Httparty</MenuItem>
                               <MenuItem value="cypress">Cypress</MenuItem>
                             </Field>
                             <div className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">{errors.frameworks}</div>
@@ -121,7 +132,12 @@ class MyForm extends Component<IFormProps, IFormState> {
               <Container maxWidth="md">
                 <Box margin={4}>
                   {this.state.snippet ? 
-                    <SyntaxHighlighter showLineNumbers language={this.state.language} style={atomDark}>
+                    <SyntaxHighlighter 
+                      lineProps={{style: {wordBreak: 'break-all', whiteSpace: 'pre-wrap'}}}
+                      showLineNumbers 
+                      wrapLines={true} 
+                      language={this.state.language} 
+                      style={atomDark}>
                       {this.state.snippet}
                     </SyntaxHighlighter>
                     : 
