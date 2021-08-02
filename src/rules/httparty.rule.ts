@@ -9,12 +9,12 @@ export default class HttpartyRule {
     }
 
     mountSnippet() {
-        return `HTTParty.${this.mountUrl()}${this.mountHeaders()})`
+        return `HTTParty.${this.mountUrl()}${this.mountHeaders()}${this.mountBody()})`
     }
 
     mountUrl() {
         let method: string = ""
-        let url = this.curlProperties.url?.toString().substring(0, this.curlProperties.url.toString().indexOf("?"))
+        let url = this.curlProperties.url
         switch(this.curlProperties.method) {
             case 'GET': 
                 method = `get('${url}', `;
@@ -33,7 +33,6 @@ export default class HttpartyRule {
     }
 
     mountHeaders() {
-
         if(this.curlProperties.headers.length > 0) {
             let headerSnippet: string = " :headers => {";
             this.curlProperties.headers.forEach((element, index) => {
@@ -48,5 +47,14 @@ export default class HttpartyRule {
         } else {
             return ""
         }
+    }
+
+    mountBody() {
+        let body: string = ""
+        if (typeof this.curlProperties.body != 'undefined' && this.curlProperties.body && this.curlProperties.method !== 'GET') {
+            const bodyTrimmed = this.curlProperties.body.replace(/\s+/g, '')
+            body = `, :body => ${bodyTrimmed.split('\n').join("")}.to_json`;
+        }
+        return body;
     }
 }
