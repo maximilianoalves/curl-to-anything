@@ -14,12 +14,14 @@ export default class RestAssuredRule {
 
     mountQueryParams() {
         let queryParamsRestAssured = "";
-        let queryParams = this.curlProperties.url?.searchParams;
+        let queryParams = this.curlProperties.url?.searchParams ?? "";
         let params = queryParams?.toString().split("&")
-        params?.forEach(param => {
-            let paramSplited = param.split("=");
-            queryParamsRestAssured += `.queryParam("${paramSplited[0]}", "${paramSplited[1]}")\n`
-        });
+        if (queryParams?.toString().length > 0) {
+            params?.forEach(param => {
+                let paramSplited = param.split("=");
+                queryParamsRestAssured += `.queryParam("${paramSplited[0]}", "${paramSplited[1]}")\n`
+            });
+        }
         return queryParamsRestAssured;
     }
 
@@ -53,7 +55,7 @@ export default class RestAssuredRule {
 
     mountBody() {
         let body: string = ""
-        if (typeof this.curlProperties.body != 'undefined' && this.curlProperties.body) {
+        if (typeof this.curlProperties.body != 'undefined' && this.curlProperties.body && this.curlProperties.method !== 'GET') {
             body = `\n.body(${this.curlProperties.body})`;
         }
         return body;
