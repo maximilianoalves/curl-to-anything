@@ -10,6 +10,7 @@ import {Select, TextField} from 'formik-material-ui'
 import RestAssuredRule from '../../rules/restassured.rule';
 import KarateRule from '../../rules/karate.rule'
 import HttpartyRule from '../../rules/httparty.rule';
+import SupertestRule from '../../rules/supertest.rule';
 
 export interface IFormState {
     frameworks: string;
@@ -37,6 +38,11 @@ class MyForm extends Component<IFormProps, IFormState> {
       case "httparty": {
         const httpartyRule = new HttpartyRule(curlCommand);
         this.setState({ snippet: httpartyRule.mountSnippet(), language: "ruby" })
+        break
+      }
+      case "supertest": {
+        const supertestRule = new SupertestRule(curlCommand);
+        this.setState({ snippet: supertestRule.mountSnippet(), language: "javascript" })
         break
       }
       default: {
@@ -98,7 +104,7 @@ class MyForm extends Component<IFormProps, IFormState> {
                               <MenuItem value="restassured">RestAssured</MenuItem>
                               <MenuItem value="karate">Karate/DSL</MenuItem>
                               <MenuItem value="httparty">Httparty</MenuItem>
-                              <MenuItem value="cypress">Cypress</MenuItem>
+                              <MenuItem value="supertest">SuperTest</MenuItem>
                             </Field>
                             <div className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">{errors.frameworks}</div>
                           </FormControl>
