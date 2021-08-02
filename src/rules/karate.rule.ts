@@ -22,7 +22,7 @@ export default class KarateRule {
 
     mountBody() {
         let andRequest: string = "";
-        if (this.curlProperties.body) {
+        if (this.curlProperties.body && this.curlProperties.method !== 'GET') {
             andRequest = `\n And request ${this.curlProperties.body}`;
         }
         return andRequest;

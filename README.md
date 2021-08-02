@@ -30,11 +30,11 @@ Ok, go ahead! 🚀
   - [x] POST
   - [x] PUT
   - [x] DELETE
-- [ ] Cypress
-  - [ ] GET
-  - [ ] POST
-  - [ ] PUT
-  - [ ] DELETE
+- [x] Httparty
+  - [x] GET
+  - [x] POST
+  - [x] PUT
+  - [x] DELETE
 - [ ] SuperTest
   - [ ] GET
   - [ ] POST
