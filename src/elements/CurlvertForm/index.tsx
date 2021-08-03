@@ -21,7 +21,7 @@ export interface IFormState {
 
 export interface IFormProps { }
 
-class MyForm extends Component<IFormProps, IFormState> {
+class CurlvertForm extends Component<IFormProps, IFormState> {
 
   handleSubmit({ frameworks, curlCommand }: IFormState, { setSubmitting }: FormikHelpers<IFormState>) {
     switch(frameworks) {
@@ -163,4 +163,4 @@ class MyForm extends Component<IFormProps, IFormState> {
   }
 }
 
-export default MyForm;
+export default CurlvertForm;

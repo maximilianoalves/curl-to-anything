@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 //elements
 import Header from '../../elements/Header';
+import SchemaJsonForm from '../../elements/SchemaJsonForm';
 
 import './styles.css'
-import CurlvertForm from '../../elements/CurlvertForm';
 
-class Home extends Component {
 
+class SchemaJSON extends Component {
   render(){
     return (
       <div>
         <Header />
-        <CurlvertForm />
+        <SchemaJsonForm />
       </div>
     );
   }
 }
 
-export default Home;
+export default SchemaJSON;
