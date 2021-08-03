@@ -12,7 +12,7 @@ class Header extends Component {
                     <Typography variant="h4" className={styles.title}>
                         <Link color="inherit" href="/curl-to-anything" >cURL to Anything</Link>
                     </Typography>
-                    <Button color="inherit" href="/curl-to-anything/schema-json">Schema JSON</Button>
+                    <Button color="inherit" href="/curl-to-anything/#/schema-json">Schema JSON</Button>
                 </Toolbar>
           </AppBar>
         )
