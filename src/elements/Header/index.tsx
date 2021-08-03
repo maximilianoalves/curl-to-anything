@@ -10,9 +10,9 @@ class Header extends Component {
             <AppBar position="static">
                 <Toolbar >
                     <Typography variant="h4" className={styles.title}>
-                        <Link color="inherit" href="/" >cURL to Anything</Link>
+                        <Link color="inherit" href="/curl-to-anything" >cURL to Anything</Link>
                     </Typography>
-                    <Button color="inherit" href="/schema-json">Schema JSON</Button>
+                    <Button color="inherit" href="/curl-to-anything/schema-json">Schema JSON</Button>
                 </Toolbar>
           </AppBar>
         )

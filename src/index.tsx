@@ -8,8 +8,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 ReactDOM.render(
     <BrowserRouter>
       <Switch>
-        <Route path={["/", "/curl-to-anything"]} exact={true} component={App} />
-        <Route path="/schema-json" component={SchemaJSON} />
+        <Route path={["/curl-to-anything"]} exact={true} component={App} />
+        <Route path="/curl-to-anything/schema-json" component={SchemaJSON} />
       </Switch>
     </BrowserRouter>,
   document.getElementById('root')
