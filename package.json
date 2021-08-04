@@ -24,6 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-syntax-highlighter": "^13.5.0",
+    "react-toastify": "^7.0.4",
     "to-json-schema": "^0.2.5",
     "typescript": "~3.7.2"
   },

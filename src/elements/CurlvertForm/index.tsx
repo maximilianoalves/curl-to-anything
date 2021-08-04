@@ -6,6 +6,8 @@ import {Container, Box, FormControl, InputLabel, MenuItem, Button} from '@materi
 import {FileCopyOutlined} from '@material-ui/icons';
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import {Select, TextField} from 'formik-material-ui'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //rules
 import RestAssuredRule from '../../rules/restassured.rule';
 import KarateRule from '../../rules/karate.rule'
@@ -16,6 +18,7 @@ export interface IFormState {
     frameworks: string;
     curlCommand: string;
     snippet: string;
+    open: boolean;
     language: string;
 }
 
@@ -54,7 +57,7 @@ class CurlvertForm extends Component<IFormProps, IFormState> {
 
   constructor(props: IFormProps) {
     super(props);
-    this.state = {frameworks: "", curlCommand: "", snippet: "", language: ""};
+    this.state = {frameworks: "", curlCommand: "", snippet: "", language: "", open: false};
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -76,6 +79,10 @@ class CurlvertForm extends Component<IFormProps, IFormState> {
     return error;
   }
 
+  onCopyText() {
+    toast.success("Text copied!");
+  }
+
   render() {
       return (
           <div>
@@ -85,6 +92,7 @@ class CurlvertForm extends Component<IFormProps, IFormState> {
                       frameworks: '',
                       curlCommand: '',
                       snippet: '',
+                      open: false,
                       language: ''
                     }}
                     onSubmit={this.handleSubmit}
@@ -150,12 +158,13 @@ class CurlvertForm extends Component<IFormProps, IFormState> {
                     null
                   }
                   {this.state.snippet ?
-                    <CopyToClipboard text={this.state.snippet}>
+                    <CopyToClipboard text={this.state.snippet} onCopy={() => this.onCopyText()}>
                       <Button  startIcon={<FileCopyOutlined />} variant="outlined">Copy to clipboard</Button>
                     </CopyToClipboard>
                     : 
                     null
                   }
+                  <ToastContainer />
                 </Box>
               </Container>
           </div>
