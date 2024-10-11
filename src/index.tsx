@@ -1,14 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import SchemaJSON from './pages/SchemaJSON';
-import { HashRouter, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
+  <React.StrictMode>
     <HashRouter>
-        <Route path={["/", "/curl-to-anything"]} exact={true} component={App} />
-        <Route path="/schema-json" component={SchemaJSON} />
-    </HashRouter>,
-  document.getElementById('root')
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/curl-to-anything" element={<App />} />
+        <Route path="/schema-json" element={<SchemaJSON />} />
+      </Routes>
+    </HashRouter>
+  </React.StrictMode>
 );

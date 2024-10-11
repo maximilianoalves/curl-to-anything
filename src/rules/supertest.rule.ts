@@ -14,7 +14,7 @@ export default class SupertestRule {
 
     mountUrl() {
         let method: string = ""
-        let url = this.curlProperties.url?.host
+        let url = this.curlProperties.url?.origin
         let pathname = this.curlProperties.url?.pathname
         switch(this.curlProperties.method) {
             case 'GET': 

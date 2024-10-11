@@ -27,7 +27,8 @@ export default class RestAssuredRule {
 
     mountUrl() {
         let method: string = ""
-        let url = this.curlProperties.url?.toString().substring(0, this.curlProperties.url.toString().indexOf("?"))
+        let url = this.curlProperties.url?.href.toString()
+
         switch(this.curlProperties.method) {
             case 'GET': 
                 method = `.get("${url}")`;

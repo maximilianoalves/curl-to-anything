@@ -1,37 +1,34 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   
 jobs:
-
   build-and-deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [22.x]
 
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Checkout
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v4
         
       - name: Install and build
-        run: npm install && npm run build
+        run: yarn && yarn run build
 
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
